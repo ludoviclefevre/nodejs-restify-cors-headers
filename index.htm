@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cross-Origin Resource Sharing (CORS) With jQuery And Node.js</title>
+</head>
+<body>
+
+<h1>
+    Cross-Origin Resource Sharing (CORS) With jQuery And Node.js
+</h1>
+
+<h2>
+    POST Response
+</h2>
+<pre id="postResponse"></pre>
+<h2>
+    POST response headers
+</h2>
+<pre id="postHeaderResponse"></pre>
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script type="text/javascript">
+    var makePOSTRequest = function () {
+        $.ajax({
+            type: "POST",
+            url: "http://localhost:4444/ping",
+            contentType: "application/json",
+            data: JSON.stringify({
+                value: "Demo"
+            }),
+            dataType: "json",
+            success: function (response, status, xhr) {
+                $("#postResponse").text('Content: ' + response);
+
+                var responseHeader = "MyCustomHeader=" + xhr.getResponseHeader('MyCustomHeader');
+                responseHeader += "<br/>MyOtherCustomHeader=" + xhr.getResponseHeader('MyOtherCustomHeader');
+                $('#postHeaderResponse').html(responseHeader);
+            },
+            error: function (error) {
+                // Log any error.
+                console.log("ERROR:", error);
+            },
+            complete: function () {
+            }
+        });
+    };
+    makePOSTRequest();
+</script>
+</body>
+</html> 
